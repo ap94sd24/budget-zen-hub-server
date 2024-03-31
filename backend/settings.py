@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
-WEBSITE_URL = "http://127.0.0.1:8000"
+WEBSITE_URL = "https://django-test-deployment-lovat.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -50,11 +50,9 @@ REST_FRAMEWORK = {
 }
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "https://budget-zen-hub.vercel.app"]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "https://budget-zen-hub.vercel.app"]
 
 
 # Application definition
