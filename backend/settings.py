@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
-WEBSITE_URL = "https://django-test-deployment-lovat.vercel.app"
+WEBSITE_URL = ""
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
