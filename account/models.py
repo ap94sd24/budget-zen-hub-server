@@ -53,7 +53,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
   def get_avatar(self):
     if self.avatar:
-      return settings.WEBSITE_URL + self.avatar.url
+      if 's3' in self.avatar.url:
+        return self.avatar.url
+      else:
+        return settings.WEBSITE_URL + self.avatar.url
     else:
       return 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'
   

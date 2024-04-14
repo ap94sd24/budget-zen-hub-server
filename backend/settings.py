@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "example",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -113,24 +114,24 @@ WSGI_APPLICATION = "backend.wsgi.app"
 # Note: Django modules for using databases are not support in serverless
 # environments like Vercel. You can use a database over HTTP, hosted elsewhere.
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "railway",
-#         "USER": "postgres",
-#         "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
-#         "HOST": "roundhouse.proxy.rlwy.net",
-#         "PORT": "16811",
-#     }
-# }
-
-# Local database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
+        "HOST": "roundhouse.proxy.rlwy.net",
+        "PORT": "16811",
     }
 }
+
+# Local database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 # Password validation
@@ -170,6 +171,21 @@ USE_TZ = True
 STATIC_URL = "/static/"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+# AWS Configuration
+AWS_ACCESS_KEY_ID = 'AKIA5FTZBHDPXFSHFLPT'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'budget-zen-hub-assets'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE = False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_FILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
