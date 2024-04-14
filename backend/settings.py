@@ -29,8 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
-# WEBSITE_URL = "http://127.0.0.1:8000"
-WEBSITE_URL = "https://budget-zen-hub-server.vercel.app"
+WEBSITE_URL = "http://127.0.0.1:8000"
+# WEBSITE_URL = "https://budget-zen-hub-server.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -113,14 +113,22 @@ WSGI_APPLICATION = "backend.wsgi.app"
 # Note: Django modules for using databases are not support in serverless
 # environments like Vercel. You can use a database over HTTP, hosted elsewhere.
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "railway",
+#         "USER": "postgres",
+#         "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
+#         "HOST": "roundhouse.proxy.rlwy.net",
+#         "PORT": "16811",
+#     }
+# }
+
+# Local database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
-        "USER": "postgres",
-        "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
-        "HOST": "roundhouse.proxy.rlwy.net",
-        "PORT": "16811",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
