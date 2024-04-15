@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,8 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
-WEBSITE_URL = "http://127.0.0.1:8000"
-# WEBSITE_URL = "https://budget-zen-hub-server.vercel.app"
+# WEBSITE_URL = "http://127.0.0.1:8000"
+WEBSITE_URL = "https://budget-zen-hub-server.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -109,6 +110,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.app"
 
 
+
+
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # Note: Django modules for using databases are not support in serverless
@@ -116,12 +120,12 @@ WSGI_APPLICATION = "backend.wsgi.app"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
-        "USER": "postgres",
-        "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
-        "HOST": "roundhouse.proxy.rlwy.net",
-        "PORT": "16811",
+        "ENGINE": os.getenv('DATABASE_ENGINE'),
+        "NAME":  os.getenv('DATABASE_NAME'),
+        "USER":  os.getenv('DATABASE_USER'),
+        "PASSWORD": os.getenv('DATABASE_PASSWORD'),
+        "HOST": os.getenv('DATABASE_HOST'),
+        "PORT": os.getenv('DATABASE_PORT'),
     }
 }
 
@@ -174,17 +178,15 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # AWS Configuration
-AWS_ACCESS_KEY_ID = 'AKIA5FTZBHDPXFSHFLPT'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 
-AWS_STORAGE_BUCKET_NAME = 'budget-zen-hub-assets'
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_FILE_OVERWRITE = False
+AWS_S3_FILE_OVERWRITE = os.getenv('AWS_S3_FILE_OVERWRITE')
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_FILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
 
 
 # Default primary key field type
