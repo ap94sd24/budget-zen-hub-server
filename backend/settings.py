@@ -109,7 +109,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.app"
 
-print(os.environ)
+#print(os.environ)
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # Note: Django modules for using databases are not support in serverless
