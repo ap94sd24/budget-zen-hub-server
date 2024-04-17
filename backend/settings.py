@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
 # WEBSITE_URL = "http://127.0.0.1:8000"
-WEBSITE_URL = "https://budget-zen-hub-server.vercel.app"
+WEBSITE_URL = "https://budget-zen-hub-server2.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
