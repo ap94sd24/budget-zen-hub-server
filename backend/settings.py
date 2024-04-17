@@ -12,11 +12,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,12 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=cldztbc4jg&xl0!x673!*v2_=p$$eu)=7*f#d0#zs$44xx-h^"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = [".vercel.app"]
 
 
-# WEBSITE_URL = "http://127.0.0.1:8000"
 WEBSITE_URL = "https://budget-zen-hub-server2.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -53,9 +55,9 @@ REST_FRAMEWORK = {
 }
 
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "https://budget-zen-hub.vercel.app"]
+CORS_ALLOWED_ORIGINS = ["https://budget-zen-hub.vercel.app"]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "https://budget-zen-hub.vercel.app"]
+CSRF_TRUSTED_ORIGINS = ["https://budget-zen-hub.vercel.app"]
 
 
 # Application definition
@@ -110,7 +112,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.app"
 
-print(os.environ)
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # Note: Django modules for using databases are not support in serverless
@@ -121,18 +123,10 @@ DATABASES = {
         "NAME": "railway",
         "USER": "postgres",
         "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
-        "HOST":  "roundhouse.proxy.rlwy.net",
+        "HOST": "roundhouse.proxy.rlwy.net",
         "PORT": "16811",
     }
 }
-
-# Local database
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 
 
 # Password validation
@@ -174,21 +168,25 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-# AWS Configuration
-AWS_ACCESS_KEY_ID = "AKIA5FTZBHDPXFSHFLPT"
-AWS_SECRET_ACCESS_KEY = "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"
+if os.environ.get("VERCEL_ENV") == "production":
+    # AWS Configuration
+    AWS_ACCESS_KEY_ID = "AKIA5FTZBHDPXFSHFLPT"
+    AWS_SECRET_ACCESS_KEY = "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"
 
-AWS_STORAGE_BUCKET_NAME = "budget-zen-hub-assets"
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_FILE_OVERWRITE = False
+    AWS_STORAGE_BUCKET_NAME = "budget-zen-hub-assets"
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+    AWS_S3_FILE_OVERWRITE = False
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_FILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATIC_FILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+try:
+    from .settings_local import *
+except ImportError:
+    pass

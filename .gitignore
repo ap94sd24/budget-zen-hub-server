@@ -4,6 +4,7 @@
 __pycache__
 db.sqlite3
 media
+backend/settings_local.py
 
 # Environments 
 .env 
