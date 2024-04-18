@@ -36,7 +36,16 @@ ALLOWED_HOSTS = [".vercel.app"]
 
 WEBSITE_URL = "https://budget-zen-hub-server2.vercel.app"
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_FROM = "adampan94@gmail.com"
+EMAIL_HOST_USER = "adampan94@gmail.com"
+EMAIL_HOST_PASSWORD = "A.P-924xy@94"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# reset token avail for 4 hrs
+PASSWORD_RESET_TIMEOUT = 14400
 
 
 AUTH_USER_MODEL = "account.User"
