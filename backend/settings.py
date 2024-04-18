@@ -26,7 +26,7 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-=cldztbc4jg&xl0!x673!*v2_=p$$eu)=7*f#d0#zs$44xx-h^"
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -122,9 +122,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "railway",
         "USER": "postgres",
-        "PASSWORD": "IveKkGPXORMXJxCVBwARPNLuJZdKeRQx",
-        "HOST": "roundhouse.proxy.rlwy.net",
-        "PORT": "16811",
+        "PASSWORD": os.environ.get("DJANGO_DATABASE_PASSWORD"),
+        "HOST": os.environ.get("DJANGO_DATABASE_HOST"),
+        "PORT": os.environ.get("DJANGO_DATABASE_PORT"),
     }
 }
 
@@ -170,12 +170,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 if os.environ.get("VERCEL_ENV") == "production":
     # AWS Configuration
-    AWS_ACCESS_KEY_ID = "AKIA5FTZBHDPXFSHFLPT"
-    AWS_SECRET_ACCESS_KEY = "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"
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
-    AWS_STORAGE_BUCKET_NAME = "budget-zen-hub-assets"
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
-    AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_FILE_OVERWRITE = os.environ.get("AWS_S3_FILE_OVERWRITE")
 
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     STATIC_FILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
