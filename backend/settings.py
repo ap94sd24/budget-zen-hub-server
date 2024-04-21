@@ -38,11 +38,11 @@ WEBSITE_URL = "https://budget-zen-hub-server2.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_FROM = "adampan94@gmail.com"
-EMAIL_HOST_USER = "adampan94@gmail.com"
-EMAIL_HOST_PASSWORD = "A.P-924xy@94"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_FROM = os.environ.get("EMAIL_FROM")
+EMAIL_HOST_USER = os.environ.get("EMAIL_FROM")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 
 # reset token avail for 4 hrs
 PASSWORD_RESET_TIMEOUT = 14400
