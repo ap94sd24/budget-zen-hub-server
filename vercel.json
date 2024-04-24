@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "backend/wsgi.py"
     }
+  ],
+  "crons": [
+    {
+      "path": "/scripts/follower_suggestions",
+      "schedule": "*/5 * * * *"
+    }
   ]
 }
