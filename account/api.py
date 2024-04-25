@@ -194,3 +194,26 @@ def my_suggested_followers(request):
     serializer = UserSerializer(request.user.people_you_may_know.all(), many=True)
 
     return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(["GET"])
+@authentication_classes([])
+@permission_classes([])
+def generate_follower_suggestions(request):
+    users = User.objects.all()
+
+    for user in users:
+        user.people_you_may_know.clear()
+
+        for follower in user.followers.all():
+
+            for followersfollower in follower.followers.all():
+                if (
+                    followersfollower not in user.followers.all()
+                    and followersfollower != user
+                ):
+                    user.people_you_may_know.add(followersfollower)
+
+    return JsonResponse(
+        {"message": "Follower suggestions generated!", "status": "success"}
+    )

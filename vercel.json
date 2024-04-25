@@ -11,5 +11,15 @@
       "src": "/(.*)",
       "dest": "backend/wsgi.py"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/generate_follower_suggestions/",
+      "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/api/posts/cron/generate_trends/",
+      "schedule": "0 19 * * *"
+    }
   ]
 }
