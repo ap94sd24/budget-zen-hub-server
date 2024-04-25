@@ -15,7 +15,11 @@
   "crons": [
     {
       "path": "/scripts/follower_suggestions",
-      "schedule": "0 5 * * *"
+      "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/scripts/trends",
+      "schedule": "0 19 * * *"
     }
   ]
 }
