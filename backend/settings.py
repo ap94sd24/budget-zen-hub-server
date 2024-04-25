@@ -33,7 +33,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [".vercel.app"]
 
-
+# https://budget-zen-hub-server2.vercel.app
 WEBSITE_URL = "https://budget-zen-hub-server3.vercel.app"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
