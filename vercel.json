@@ -14,7 +14,7 @@
   ],
   "crons": [
     {
-      "path": "/script/follower_suggestions",
+      "path": "/scripts/follower_suggestions",
       "schedule": "0 5 * * *"
     }
   ]
