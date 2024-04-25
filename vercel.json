@@ -15,11 +15,11 @@
   "crons": [
     {
       "path": "/api/cron/generate_follower_suggestions/",
-      "schedule": "0 19 * * *"
+      "schedule": "0 7 * * 1"
     },
     {
       "path": "/api/posts/cron/generate_trends/",
-      "schedule": "0 19 * * *"
+      "schedule": "0 7 * * 0-5"
     }
   ]
 }
