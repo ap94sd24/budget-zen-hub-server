@@ -17,6 +17,7 @@ from .forms import SignupForm, ProfileForm
 from .models import User, FollowerRequest
 from post.models import Post, Trend
 from .serializers import UserSerializer, FollowerRequestSerializer
+from utils.text_helpers import extract_hashtags
 
 
 @api_view(["GET"])
@@ -223,14 +224,6 @@ def generate_follower_suggestions(request):
     )
 
 
-def extract_hashtags_helper(text, trends):
-    for word in text.split():
-        if word[0] == "#":
-            trends.append(word[1:])
-
-    return trends
-
-
 @api_view(["GET"])
 @authentication_classes([])
 @permission_classes([])
@@ -255,7 +248,6 @@ def generate_all_cron_jobs_data(request):
     # cron job no. 2
     for trend in Trend.objects.all():
         trend.delete()
-    trends = []
 
     this_hour = timezone.now().replace(minute=0, second=0, microsecond=0)
     twenty_four_hours = this_hour - timedelta(hours=24)
@@ -263,7 +255,7 @@ def generate_all_cron_jobs_data(request):
     for post in Post.objects.filter(created_at__gte=twenty_four_hours).filter(
         is_private=False
     ):
-        extract_hashtags_helper(post.body, trends)
+        trends = extract_hashtags(post.body)
 
     for trend in Counter(trends).most_common(10):
         Trend.objects.create(hashtag=trend[0], occurrences=trend[1])
