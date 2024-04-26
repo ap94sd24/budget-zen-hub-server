@@ -11,6 +11,11 @@ urlpatterns = [
         api.generate_follower_suggestions,
         name="generate_follower_suggestions",
     ),
+    path(
+        "cron/generate_all_cron_data/",
+        api.generate_all_cron_jobs_data,
+        name="generate_all_cron_jobs_data",
+    ),
     path("signup/", api.signup, name="signup"),
     path("login/", TokenObtainPairView.as_view(), name="token_obtain"),
     path("refresh/", TokenRefreshView.as_view(), name="token-refresh"),

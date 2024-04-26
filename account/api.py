@@ -2,6 +2,9 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail, EmailMultiAlternatives
+from collections import Counter
+from datetime import timedelta
+from django.utils import timezone
 
 from rest_framework.decorators import (
     api_view,
@@ -12,6 +15,7 @@ from rest_framework.decorators import (
 from notification.utils import create_notification
 from .forms import SignupForm, ProfileForm
 from .models import User, FollowerRequest
+from post.models import Post, Trend
 from .serializers import UserSerializer, FollowerRequestSerializer
 
 
@@ -217,3 +221,51 @@ def generate_follower_suggestions(request):
     return JsonResponse(
         {"message": "Follower suggestions generated!", "status": "success"}
     )
+
+
+def extract_hashtags_helper(text, trends):
+    for word in text.split():
+        if word[0] == "#":
+            trends.append(word[1:])
+
+    return trends
+
+
+@api_view(["GET"])
+@authentication_classes([])
+@permission_classes([])
+def generate_all_cron_jobs_data(request):
+    # workaround for hobby plan's cron limit...
+
+    # cron job no. 1
+    users = User.objects.all()
+
+    for user in users:
+        user.people_you_may_know.clear()
+
+        for follower in user.followers.all():
+
+            for followersfollower in follower.followers.all():
+                if (
+                    followersfollower not in user.followers.all()
+                    and followersfollower != user
+                ):
+                    user.people_you_may_know.add(followersfollower)
+
+    # cron job no. 2
+    for trend in Trend.objects.all():
+        trend.delete()
+    trends = []
+
+    this_hour = timezone.now().replace(minute=0, second=0, microsecond=0)
+    twenty_four_hours = this_hour - timedelta(hours=24)
+
+    for post in Post.objects.filter(created_at__gte=twenty_four_hours).filter(
+        is_private=False
+    ):
+        extract_hashtags_helper(post.body, trends)
+
+    for trend in Counter(trends).most_common(10):
+        Trend.objects.create(hashtag=trend[0], occurrences=trend[1])
+
+    return JsonResponse({"message": "All cron jobs completed!", "status": "success"})

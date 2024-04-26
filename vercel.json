@@ -14,12 +14,8 @@
   ],
   "crons": [
     {
-      "path": "/api/cron/generate_follower_suggestions/",
-      "schedule": "0 7 * * 6"
-    },
-    {
-      "path": "/api/posts/cron/generate_trends/",
-      "schedule": "0 7 * * 0-5"
+      "path": "/api/cron/generate_all_cron_data/",
+      "schedule": "0 7 * * *"
     }
   ]
 }
