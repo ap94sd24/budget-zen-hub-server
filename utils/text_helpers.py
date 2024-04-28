@@ -1,4 +1,4 @@
-def extract_hashtags(text):
+def extract_hashtags(text, trends):
     """
     Extract hashtags from a given text string and return them as a list.
 
@@ -8,8 +8,8 @@ def extract_hashtags(text):
     Returns:
     list: A list of extracted hashtags without the '#' character.
     """
-    hashtags = []
     for word in text.split():
         if word.startswith("#"):
-            hashtags.append(word[1:])  # Exclude the '#' character
-    return hashtags
+            trends.append(word[1:])  # Exclude the '#' character
+    print(trends)
+    return trends
