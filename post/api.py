@@ -56,7 +56,6 @@ def post_list_profile(request, id):
     # if ur a follower see all posts
     # if ur not a follower, only see public posts
     if not request.user in user.followers.all():
-        print("Enter here!?!?")
         posts = posts.filter(is_private=False)
 
     posts_serializer = PostSerializer(posts, many=True)
@@ -91,8 +90,6 @@ def post_list_profile(request, id):
 def post_create(request):
     form = PostForm(request.POST)
     attachment = None
-    print(request.POST)
-    print(request.FILES)
     attachment_form = AttachmentForm(request.POST, request.FILES)
 
     if attachment_form.is_valid():
